@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="MultipleAxes_Sample.MainPage"
+             xmlns:local="clr-namespace:MultipleAxes_Sample"
+             xmlns:chart="clr-namespace:Syncfusion.Maui.Charts;assembly=Syncfusion.Maui.Charts">
+
+    <chart:SfCartesianChart HeightRequest="600" WidthRequest="900">
+        <chart:SfCartesianChart.Title>
+            <Label  Text="Sales and Revenue of the Apple iPhone"
+                    HorizontalOptions="Center" VerticalOptions="Center" TextColor="Black" 
+                    FontAttributes="Bold">
+            </Label>
+        </chart:SfCartesianChart.Title>
+        <chart:SfCartesianChart.BindingContext>
+            <local:ChartViewModel/>
+        </chart:SfCartesianChart.BindingContext>
+        <chart:SfCartesianChart.XAxes>
+            <chart:DateTimeAxis  Minimum="2007/01/01" RangePadding="None" 
+                                 Maximum="2019/01/01" EdgeLabelsDrawingMode="Shift"
+                                 EdgeLabelsVisibilityMode="Visible"  
+                                 IntervalType="Months" Interval="6"  Name="XAxis1">
+                <chart:DateTimeAxis.LabelStyle>
+                    <chart:ChartAxisLabelStyle Margin="3" LabelFormat="yyyy" />
+                </chart:DateTimeAxis.LabelStyle>
+                <chart:DateTimeAxis.Title>
+                    <chart:ChartAxisTitle Text="Year" FontAttributes="Bold" />
+                </chart:DateTimeAxis.Title>
+            </chart:DateTimeAxis>
+        </chart:SfCartesianChart.XAxes>
+
+        <chart:SfCartesianChart.YAxes>
+            <chart:NumericalAxis PlotOffsetEnd="20"  Name="YAxis1"  Minimum="0"  >
+                <chart:NumericalAxis.LabelStyle>
+                    <chart:ChartAxisLabelStyle FontSize="12" TextColor="#0091E6" 
+                                               FontAttributes="Bold" LabelFormat="0.#M" />
+                </chart:NumericalAxis.LabelStyle>
+            </chart:NumericalAxis>
+            <chart:NumericalAxis PlotOffsetEnd="20" ShowMajorGridLines="False"  
+                                 Interval="4000" CrossesAt="{Static x:Double.MaxValue}" 
+                                  Name="YAxis2" Minimum="0"  >
+                <chart:NumericalAxis.LabelStyle>
+                    <chart:ChartAxisLabelStyle FontSize="12" TextColor="#ff1493" 
+                                               FontAttributes="Bold" LabelFormat="$0.#M" />
+                </chart:NumericalAxis.LabelStyle>
+            </chart:NumericalAxis>
+        </chart:SfCartesianChart.YAxes>
+
+        <chart:SfCartesianChart.Legend>
+            <chart:ChartLegend/>
+        </chart:SfCartesianChart.Legend>
+
+        <chart:ColumnSeries Width="1" Spacing="0.2" Label="Sales" XBindingPath="Year"
+                            Fill="#0091E6" YAxisName="YAxis1"     YBindingPath="SalesValue" 
+                            ShowDataLabels="True"    XAxisName="XAxis1" ItemsSource="{Binding SalesData}">
+            <chart:ColumnSeries.DataLabelSettings>
+                <chart:CartesianDataLabelSettings UseSeriesPalette="False" LabelPlacement="Outer" />
+            </chart:ColumnSeries.DataLabelSettings>
+        </chart:ColumnSeries>
+        <chart:ColumnSeries  Width="1" Spacing="0.2" XAxisName="XAxis1"   Label="Revenue" Fill="#ff1493" 
+                             XBindingPath = "Year"   ShowDataLabels="True" YAxisName = "YAxis2"
+                             YBindingPath = "SalesRevenue" ItemsSource = "{Binding SalesData}"  >
+            <chart:ColumnSeries.DataLabelSettings>
+                <chart:CartesianDataLabelSettings UseSeriesPalette="False" LabelPlacement="Outer" />
+            </chart:ColumnSeries.DataLabelSettings>
+        </chart:ColumnSeries>
+    </chart:SfCartesianChart>
+</ContentPage>
